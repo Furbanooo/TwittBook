@@ -9,10 +9,7 @@
 <body>
     <header>
         <h1>Inscription</h1>
-        <nav>
-            <a href="index.php">Accueil</a>
-            <a href="login.php">Connexion</a>
-        </nav>
+        
     </header>
     <main>
         <form action="register_process.php" method="post">
@@ -24,6 +21,7 @@
             <input type="password" id="password" name="password" required>
             <button type="submit">S'inscrire</button>
         </form>
+        <p>Vous avez déjà un compte ? <a href="login.php">Connectez-vous ici</a>.</p>
     </main>
 </body>
 </html>
