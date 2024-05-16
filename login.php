@@ -1,10 +1,10 @@
 <?php
     require 'config.php';
-    $statement=$connexion ->prepare("SELECT * FROM users");
-    $statement -> execute();
+    $contents=$connexion ->prepare("SELECT * FROM users");
+    $contents -> execute();
  
  
-    $tasks= $statement ->fetchAll();
+    $tasks= $contents ->fetchAll();
 ?>
 
 

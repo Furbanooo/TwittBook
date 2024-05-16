@@ -1,3 +1,13 @@
+<?php require 'config.php';
+
+// Préparer et exécuter la requête pour récupérer tous les tweets avec les informations des utilisateurs
+$statement = $connexion->prepare("SELECT tweets.*, users.username FROM tweets JOIN users ON tweets.user_id = users.id ORDER BY tweets.created_at DESC");
+$statement->execute();
+
+// Récupérer tous les résultats de la requête
+$tweets = $statement->fetchAll();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -17,20 +27,35 @@
     </header>
     <main>
         <div class="tweets-container">
-            <?php foreach ($tweets as $tweet): ?>
-                <div class="tweet">
-                    <h3><?php echo htmlspecialchars($tweet['username']); ?></h3>
-                    <p><?php echo htmlspecialchars($tweet['content']); ?></p>
-                    <small>Posté le <?php echo $tweet['created_at']; ?></small>
-                    <div class="like-button">❤️</div>
-                </div>
-            <?php endforeach; ?>
+            <?php if (empty($tweets)): ?>
+                <p>Aucun tweet n'a encore été publié.</p>
+            <?php else: ?>
+                <?php foreach ($tweets as $tweet): ?>
+                    <div class="tweet">
+                        <h3><?php echo htmlspecialchars($tweet['username']); ?></h3>
+                        <p><?php echo htmlspecialchars($tweet['content']); ?></p>
+                        <small>Posté le <?php echo $tweet['created_at']; ?></small>
+                        <div class="like-dislike-container">
+                            <form action="home.php" method="post" style="display: inline;">
+                                <input type="hidden" name="tweet_id" value="<?php echo $tweet['id']; ?>">
+                                <input type="hidden" name="action" value="like">
+                                <button type="submit" class="like-button">❤️ <?php echo $tweet['likes']; ?></button>
+                            </form>
+                            <form action="home.php" method="post" style="display: inline;">
+                                <input type="hidden" name="tweet_id" value="<?php echo $tweet['id']; ?>">
+                                <input type="hidden" name="action" value="dislike">
+                                <button type="submit" class="dislike-button">💔 <?php echo $tweet['dislikes']; ?></button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
-
-        <form action="acceuille_proccess.php" method="post" class="tweet-form">
+        <form action="home.php" method="post" class="tweet-form">
             <textarea name="content" rows="4" cols="50" placeholder="Quoi de neuf ?" required></textarea>
             <button type="submit">Post</button>
-        </form>
+        </form>  
     </main>
+
 </body>
 </html>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $connexion->prepare($query);
 
         if ($stmt->execute([$user_id, $content])) {
-            header('Location: home.php');
+            header('Location: acceuille.php');
             exit();
         } else {
             echo 'Erreur lors de la publication du tweet.';
@@ -33,3 +33,4 @@ $query = "SELECT tweets.*, users.username FROM tweets JOIN users ON tweets.user_
 $stmt = $connexion->query($query);
 $tweets = $stmt->fetchAll();
 ?>
+
