@@ -7,10 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
     $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    $stmt = $pdo->prepare($query);
+    $stmt = $connexion->prepare($query);
 
     if ($stmt->execute([$username, $email, $password])) {
-        header('Location: login.php');
+        header('Location: acceuille.php');
     } else {
         echo 'Erreur lors de l\'inscription.';
     }

@@ -1,6 +1,6 @@
 <?php
     require 'config.php';
-    $statement=$connexion ->prepare("SELECT * FROM user");
+    $statement=$connexion ->prepare("SELECT * FROM users");
     $statement -> execute();
  
  
