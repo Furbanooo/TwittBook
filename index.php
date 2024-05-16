@@ -10,7 +10,7 @@
     <header>
         <h1>Twitter Clone</h1>
         <nav>
-            <a href="index.php">Accueil</a>
+           
             <a href="login.php">Connexion</a>
             <a href="register.php">Inscription</a>
         </nav>

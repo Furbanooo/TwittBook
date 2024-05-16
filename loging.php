@@ -1,3 +1,13 @@
+<?php
+    require 'config.php';
+    $statement=$connexion ->prepare("SELECT * FROM user");
+    $statement -> execute();
+ 
+ 
+    $tasks= $statement ->fetchAll();
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
