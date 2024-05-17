@@ -28,10 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Traiter les "likes" et "dislikes"
+// Traiter les "likes" et "dislikes" avec AJAX
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_POST['tweet_id'])) {
     $tweet_id = $_POST['tweet_id'];
     $action = $_POST['action'];
+    $user_id = $_SESSION['user_id'];
 
     // Vérifier si l'utilisateur a déjà "liké" ou "disliké" ce tweet
     $query = "SELECT * FROM likes_dislikes WHERE tweet_id = ? AND user_id = ?";
@@ -41,9 +42,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_P
 
     if ($existing) {
         // Mise à jour du "like" ou "dislike"
-        $query = "UPDATE likes_dislikes SET type = ? WHERE id = ?";
-        $stmt = $connexion->prepare($query);
-        $stmt->execute([$action, $existing['id']]);
+        if ($action === 'like' && $existing['type'] === 'dislike') {
+            $query = "UPDATE likes_dislikes SET type = ? WHERE id = ?";
+            $stmt = $connexion->prepare($query);
+            $stmt->execute(['like', $existing['id']]);
+        } elseif ($action === 'dislike' && $existing['type'] === 'like') {
+            $query = "UPDATE likes_dislikes SET type = ? WHERE id = ?";
+            $stmt = $connexion->prepare($query);
+            $stmt->execute(['dislike', $existing['id']]);
+        } elseif ($action === 'unlike' && $existing['type'] === 'like') {
+            $query = "DELETE FROM likes_dislikes WHERE id = ?";
+            $stmt = $connexion->prepare($query);
+            $stmt->execute([$existing['id']]);
+        } elseif ($action === 'undislike' && $existing['type'] === 'dislike') {
+            $query = "DELETE FROM likes_dislikes WHERE id = ?";
+            $stmt = $connexion->prepare($query);
+            $stmt->execute([$existing['id']]);
+        }
     } else {
         // Insertion d'un nouveau "like" ou "dislike"
         $query = "INSERT INTO likes_dislikes (tweet_id, user_id, type) VALUES (?, ?, ?)";
@@ -51,7 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_P
         $stmt->execute([$tweet_id, $user_id, $action]);
     }
 
-    header('Location: home.php');
+    // Récupérer le nouveau nombre de "likes" ou "dislikes"
+    $query = "SELECT COUNT(*) FROM likes_dislikes WHERE tweet_id = ? AND type = ?";
+    $stmt = $connexion->prepare($query);
+    $stmt->execute([$tweet_id, $action]);
+    $count = $stmt->fetchColumn();
+
+    // Renvoie le nouveau nombre de "likes" ou "dislikes" au client
+    echo $count;
     exit();
 }
 
@@ -65,4 +87,3 @@ $query = "SELECT tweets.*, users.username,
 $stmt = $connexion->query($query);
 $tweets = $stmt->fetchAll();
 ?>
-
