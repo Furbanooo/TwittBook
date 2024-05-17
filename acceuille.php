@@ -1,10 +1,15 @@
 <?php require 'config.php';
 
-// Préparer et exécuter la requête pour récupérer tous les tweets avec les informations des utilisateurs
-$statement = $connexion->prepare("SELECT tweets.*, users.username FROM tweets JOIN users ON tweets.user_id = users.id ORDER BY tweets.created_at DESC");
+// Préparer et exécuter la requête pour récupérer tous les tweets et likes avec les informations des utilisateurs
+$statement = $connexion->prepare("SELECT tweets.*, users.username,
+(SELECT COUNT(*) FROM likes_dislikes WHERE tweet_id = tweets.id AND type = 'like') AS likes,
+(SELECT COUNT(*) FROM likes_dislikes WHERE tweet_id = tweets.id AND type = 'dislike') AS dislikes
+FROM tweets
+JOIN users ON tweets.user_id = users.id
+ORDER BY tweets.created_at DESC");
 $statement->execute();
 
-// Récupérer tous les résultats de la requête
+// array des tweets
 $tweets = $statement->fetchAll();
 ?>
 
@@ -51,7 +56,7 @@ $tweets = $statement->fetchAll();
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <form action="home.php" method="post" class="tweet-form">
+        <form action="acceuille_proccess.php" method="post" class="tweet-form">
             <textarea name="content" rows="4" cols="50" placeholder="Quoi de neuf ?" required></textarea>
             <button type="submit">Post</button>
         </form>  
