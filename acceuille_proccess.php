@@ -63,8 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && isset($_P
         // Insertion d'un nouveau "like" ou "dislike"
         $query = "INSERT INTO likes_dislikes (tweet_id, user_id, type) VALUES (?, ?, ?)";
         $stmt = $connexion->prepare($query);
-        $stmt->e
-        xecute([$tweet_id, $user_id, $action]);
+        $stmt->execute([$tweet_id, $user_id, $action]);
     }
 
     // Récupérer le nouveau nombre de "likes" ou "dislikes"

@@ -1,5 +1,5 @@
 <?php 
- include 'profle_proccess.php';
+ include 'profile_proccess.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,13 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/profile.css">
 </head>
 <body>
     <header>
         <h1>Profile Page</h1>
         <nav>
-            <a href="home.php">Home</a>
+            <a href="acceuille.php">Home</a>
             <a href="logout.php">Logout</a>
         </nav>
     </header>
