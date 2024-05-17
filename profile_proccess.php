@@ -10,13 +10,13 @@
 
     $user_id = $_SESSION['user_id'];
 
-    // Fetch user information
+    // Fetch user's info
     $query = "SELECT * FROM users WHERE id = ?";
     $stmt = $connexion-&gt;prepare($query);
     $stmt-&gt;execute([$user_id]);
     $user = $stmt-&gt;fetch();
 
-    // Fetch user tweets
+    // Fetch user's tweets
     $query = "SELECT * FROM tweets WHERE user_id = ? ORDER BY created_at DESC";
     $stmt = $connexion-&gt;prepare($query);
     $stmt-&gt;execute([$user_id]);
