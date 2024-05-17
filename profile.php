@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="style/variables.css">
+    <link rel="stylesheet" href="style/layout.css">
     <link rel="stylesheet" href="style/profile.css">
 </head>
 <body>

@@ -1,38 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #1da1f2;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header h1 {
-    color: white;
-}
-
-nav a {
-    margin-left: 15px;
-    color: white;
-    text-decoration: none;
-}
-
-main {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
+/* Profile Page Styles */
 .profile-info {
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     margin-bottom: 20px;
     text-align: center;
 }
@@ -47,24 +17,7 @@ main {
 .user-tweets {
     background-color: white;
     padding: 20px;
-    border-radius: 10px;
-}
-
-.tweets-container .tweet {
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.tweets-container .tweet p {
-    margin: 0;
-}
-
-.tweets-container .tweet small {
-    display: block;
-    color: #888;
-    margin-top: 5px;
+    border-radius: var(--border-radius);
 }
 
 .logout {
@@ -73,10 +26,10 @@ main {
 }
 
 .logout-button {
-    background-color: #e74c3c;
+    background-color: var(--accent-color);
     color: white;
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     text-decoration: none;
     cursor: pointer;
 }
